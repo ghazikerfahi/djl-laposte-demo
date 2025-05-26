@@ -73,7 +73,7 @@ public class ImageRecognitionService {
     public void initModelZoo() {
         try {
         
-            System.setProperty("DJL_CACHE_DIR", "/app/models/cache");
+            System.setProperty("DJL_CACHE_DIR", "models/cache");
             System.out.println("DJL cache dir: " + System.getProperty("DJL_CACHE_DIR"));
             
             Criteria<Image, Classifications> criteria = Criteria.builder()
