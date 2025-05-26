@@ -26,7 +26,7 @@ async function uploadImage() {
   formData.append('file', file.value)
 
   try {
-    const res = await axios.post('http://localhost:8080/api/image/classify', formData)
+    const res = await axios.post('${process.env.BACKEND_API_URL}/api/image/classify', formData)
     result.value = res.data
   } catch (error) {
     result.value = 'Erreur lors de la classification'
@@ -39,7 +39,7 @@ async function customUploadImage() {
   formData.append('file', file.value)
 
   try {
-    const res = await axios.post('http://localhost:8080/api/image/customClassify', formData)
+    const res = await axios.post('${process.env.BACKEND_API_URL}/api/image/customClassify', formData)
     result.value = res.data
   } catch (error) {
     result.value = 'Erreur lors de la classification'
