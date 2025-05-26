@@ -35,6 +35,7 @@ import java.util.Arrays;
 public class ImageRecognitionService {
 
     private Model model;
+    private ZooModel<Image, Classifications> modelZoo;
 
     @PostConstruct
     public void initModel() {
@@ -67,24 +68,34 @@ public class ImageRecognitionService {
             System.err.println("Failed to load model: " + e.getMessage());
         }
     }
+    
+    @PostConstruct
+    public void initModelZoo() {
+        try {
+            Criteria<Image, Classifications> criteria = Criteria.builder()
+                    .optApplication(Application.CV.IMAGE_CLASSIFICATION)
+                    .setTypes(Image.class, Classifications.class)
+                    .optEngine("PyTorch")
+                    .build();
 
-    public String predict(MultipartFile file) throws IOException, TranslateException {
-        Criteria<Image, Classifications> criteria = Criteria.builder()
-                .optApplication(Application.CV.IMAGE_CLASSIFICATION)
-                .setTypes(Image.class, Classifications.class)
-                .optEngine("PyTorch")
-                .build();
+            modelZoo = ModelZoo.loadModel(criteria);
+            System.out.println("Model Zoo loaded successfully.");
+        } catch (Exception e) {
+            System.err.println("Failed to load model zoo: " + e.getMessage());
+        }
+    }
 
-        try (ZooModel<Image, Classifications> model = ModelZoo.loadModel(criteria);
-             Predictor<Image, Classifications> predictor = model.newPredictor()) {
+    public String predict(MultipartFile file) {
+        if (model == null) {
+            return "Model Zoo not loaded";
+        }
 
+        try (Predictor<Image, Classifications> predictor = modelZoo.newPredictor()) {
             Image img = ImageFactory.getInstance().fromInputStream(file.getInputStream());
             Classifications result = predictor.predict(img);
             return result.best().toString();
-        } catch (ModelNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (MalformedModelException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            return "Prediction failed : " + e.getMessage();
         }
     }
 
