@@ -75,8 +75,6 @@ public class ImageRecognitionService {
             Criteria<Image, Classifications> criteria = Criteria.builder()
                     .optApplication(Application.CV.IMAGE_CLASSIFICATION)
                     .setTypes(Image.class, Classifications.class)
-                    .optEngine("PyTorch")
-                    .optFilter("backbone", "mobilenetv2")
                     .build();
 
             modelZoo = ModelZoo.loadModel(criteria);
