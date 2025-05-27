@@ -76,7 +76,6 @@ public class ImageRecognitionService {
                     .optApplication(Application.CV.IMAGE_CLASSIFICATION)
                     .setTypes(Image.class, Classifications.class)
                     .optEngine("PyTorch")
-                    .optFilter("dataset", "imagenet")
                     .build();
 
             modelZoo = ModelZoo.loadModel(criteria);
