@@ -88,7 +88,7 @@ public class ImageRecognitionService {
     }
 
     public String predict(MultipartFile file) {
-        if (model == null) {
+        if (modelZoo == null) {
             return "Model Zoo not loaded";
         }
 
