@@ -72,16 +72,6 @@ public class ImageRecognitionService {
     @PostConstruct
     public void initModelZoo() {
         try {
-            System.out.println("Start Model Zoo load.");
-            ModelZoo.listModels().forEach(m -> {
-                if (m.getApplication() == Application.CV.IMAGE_CLASSIFICATION
-                        && m.getInputTypes().contains(Image.class)
-                        && m.getOutputTypes().contains(Classifications.class)) {
-                    System.out.println("Model: " + m.getName());
-                    System.out.println("Filters: " + m.getFilters());
-                }
-            });
-
             Criteria<Image, Classifications> criteria = Criteria.builder()
                     .optApplication(Application.CV.IMAGE_CLASSIFICATION)
                     .setTypes(Image.class, Classifications.class)
