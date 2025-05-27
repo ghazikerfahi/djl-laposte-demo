@@ -9,7 +9,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // autorise toutes les routes
-                .allowedOrigins("https://frontend-production-be56.up.railway.app") // ou mets ici ton domaine frontend
+                .allowedOrigins("*") // ou mets ici ton domaine frontend local http://localhost:5173
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*");
     }
