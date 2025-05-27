@@ -17,6 +17,9 @@ WORKDIR /app
 # Copier le .jar depuis l'étape de build
 COPY --from=build /app/target/*.jar app.jar
 
+# Copier le modèle DJL
+COPY trained_model /app/trained_model
+
 # Exposer le port attendu par Render
 EXPOSE 8080
 
