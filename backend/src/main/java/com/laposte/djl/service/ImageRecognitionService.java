@@ -76,7 +76,7 @@ public class ImageRecognitionService {
                     .optApplication(Application.CV.IMAGE_CLASSIFICATION)
                     .setTypes(Image.class, Classifications.class)
                     .optEngine("PyTorch")
-                    .optFilter("backbone", "resnet18")
+                    .optFilter("backbone", "mobilenetv2")
                     .optFilter("dataset", "imagenet")
                     .build();
 
